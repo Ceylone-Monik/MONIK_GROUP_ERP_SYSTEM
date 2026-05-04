@@ -16,32 +16,21 @@ $branches = $pdo->query("SELECT branch_id, name FROM branches")->fetchAll(PDO::F
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asset Management | Monik Group ERP</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; background-color: #f9f9f9; }
-        .container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        table { border-collapse: collapse; width: 100%; margin-top: 20px; background: white; }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        th { background-color: #007bff; color: white; }
-        .qr-code { width: 60px; height: 60px; border: 1px solid #eee; cursor: pointer; transition: transform 0.2s; }
-        .qr-code:hover { transform: scale(1.1); }
-        .btn-add { background: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
-        /* Modal Style */
-        #assetModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); }
-        .modal-content { background:white; width:400px; margin: 10% auto; padding: 30px; border-radius: 8px; position:relative; }
-        .close-btn { position:absolute; top:10px; right:15px; cursor:pointer; font-size: 20px; }
-        input, select { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        .btn-save { background: #007bff; color: white; width: 100%; padding: 10px; border: none; border-radius: 4px; cursor: pointer; }
-    </style>
 </head>
 <body>
+<?php include '../../includes/sidebar.php'; ?>
 
+<div class="main-wrapper">
+<?php include '../../includes/topbar.php'; ?>
 <div class="container">
     <h2>📦 Asset Management</h2>
     <p>Manage and track physical assets across all Monik Group branches.</p>
     
-    <button class="btn-add" onclick="$('#assetModal').show()">+ Add New Asset</button>
+    <button class="btn" onclick="$('#assetModal').show()">+ Add New Asset</button>
 
     <table>
         <thead>
@@ -97,10 +86,11 @@ $branches = $pdo->query("SELECT branch_id, name FROM branches")->fetchAll(PDO::F
                 <?php endforeach; ?>
             </select>
 
-            <button type="submit" class="btn-save">Save Asset to System</button>
+            <button type="submit" class="btn">Save Asset to System</button>
         </form>
     </div>
 </div>
+ </div>
 
 <script>
 $(document).ready(function() {

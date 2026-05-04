@@ -14,24 +14,16 @@ $branches = $pdo->query("SELECT * FROM branches WHERE status = 'Active'")->fetch
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document Management | Monik Group</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        body { margin: 0; display: flex; font-family: 'Segoe UI', sans-serif; background: #f4f7f6; }
-        .main-wrapper { margin-left: 250px; padding: 30px; width: 100%; }
-        .file-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; margin-top: 20px; }
-        .file-card { background: white; padding: 20px; border-radius: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: relative; }
-        .file-icon { font-size: 40px; margin-bottom: 10px; display: block; }
-        .category-tag { font-size: 11px; padding: 3px 8px; border-radius: 10px; background: #eee; color: #666; }
-        .expiry-alert { color: #e74c3c; font-size: 12px; font-weight: bold; margin-top: 5px; }
-        
-        .upload-zone { background: white; padding: 20px; border-radius: 10px; border: 2px dashed #3498db; margin-bottom: 20px; }
-    </style>
 </head>
 <body>
     <?php include '../../includes/sidebar.php'; ?>
 
     <div class="main-wrapper">
+        <?php include '../../includes/topbar.php'; ?>
         <h2>📁 Document Management System</h2>
 
         <!-- Upload Form[cite: 1] -->

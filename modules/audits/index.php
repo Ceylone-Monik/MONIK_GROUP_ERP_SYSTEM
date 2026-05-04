@@ -16,31 +16,18 @@ $branches = $pdo->query("SELECT * FROM branches WHERE status = 'Active'")->fetch
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Audit & Compliance | Monik Group</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        body { margin: 0; display: flex; font-family: 'Segoe UI', sans-serif; background: #f4f7f6; }
-        .main-wrapper { margin-left: 250px; padding: 30px; width: 100%; }
-        table { width: 100%; border-collapse: collapse; background: white; margin-top: 20px; }
-        th, td { padding: 15px; border: 1px solid #ddd; text-align: left; }
-        th { background: #34495e; color: white; }
-        
-        /* Visual Indicators */
-        .score-pill { padding: 5px 12px; border-radius: 20px; font-weight: bold; color: white; }
-        .bg-red { background: #e74c3c; }    /* < 60 */
-        .bg-yellow { background: #f1c40f; } /* 60-80 */
-        .bg-green { background: #27ae60; }  /* > 80 */
-
-        .modal { display:none; position:fixed; top:10%; left:35%; background:white; padding:30px; border-radius:8px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); width: 400px; z-index: 1000; }
-        input, select, textarea { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; }
-    </style>
 </head>
 <body>
     <?php include '../../includes/sidebar.php'; ?>
 
     <div class="main-wrapper">
+        <?php include '../../includes/topbar.php'; ?>
         <h2>📊 Audit & Compliance Dashboard</h2>
-        <button onclick="$('#auditModal').show()" style="background:#3498db; color:white; padding:10px 20px; border:none; border-radius:5px; cursor:pointer;">+ New Audit Entry</button>
+        <button class="btn" onclick="$('#auditModal').show()">+ New Audit Entry</button>
 
         <table>
             <thead>
@@ -72,6 +59,7 @@ $branches = $pdo->query("SELECT * FROM branches WHERE status = 'Active'")->fetch
 
     <!-- Audit Entry Modal -->
     <div id="auditModal" class="modal">
+        <div class="modal-content">
         <h3>Submit Audit Score</h3>
         <form id="auditForm">
             <label>Branch:</label>
@@ -93,6 +81,7 @@ $branches = $pdo->query("SELECT * FROM branches WHERE status = 'Active'")->fetch
             <button type="submit" style="width:100%; background:#27ae60; color:white; padding:10px; border:none; border-radius:5px; cursor:pointer;">Submit Audit</button>
             <button type="button" onclick="$('#auditModal').hide()" style="width:100%; margin-top:10px; background:none; border:none; color:gray; cursor:pointer;">Cancel</button>
         </form>
+        </div>
     </div>
 
     <script>

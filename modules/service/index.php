@@ -13,37 +13,21 @@ $assets = $pdo->query("SELECT asset_id, name FROM assets")->fetchAll(PDO::FETCH_
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Service Board | Monik Group</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        body { margin: 0; display: flex; font-family: 'Segoe UI', sans-serif; background: #f4f7f6; }
-        .main-wrapper { margin-left: 250px; padding: 30px; width: calc(100% - 250px); box-sizing: border-box; }
-        
-        .header-section { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .btn-create { background: #27ae60; color: white; padding: 12px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
-        
-        .kanban-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .column { background: #ebedf0; padding: 15px; border-radius: 8px; min-height: 600px; }
-        .column h3 { text-align: center; color: #2c3e50; border-bottom: 2px solid #ccc; padding-bottom: 10px; margin-top: 0; }
-        
-        .ticket-card { background: white; padding: 15px; border-radius: 6px; margin-bottom: 12px; border-left: 5px solid #3498db; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .status-btn { background: #34495e; color: white; width: 100%; padding: 8px; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px; }
-        
-        /* Modal Styling */
-        #addTicketModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index: 2000; }
-        .modal-content { background:white; width:400px; margin: 10% auto; padding: 30px; border-radius: 8px; position:relative; }
-        input, select, textarea { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
-    </style>
 </head>
 <body>
 
     <?php include '../../includes/sidebar.php'; ?>
 
     <div class="main-wrapper">
+        <?php include '../../includes/topbar.php'; ?>
         <div class="header-section">
             <h2>🔧 Service & Maintenance Board</h2>
             <!-- THE MISSING BUTTON[cite: 1] -->
-            <button class="btn-create" onclick="$('#addTicketModal').show()">+ Create Service Ticket</button>
+            <button class="btn" onclick="$('#addTicketModal').show()">+ Create Service Ticket</button>
         </div>
 
         <div class="kanban-board">
@@ -107,7 +91,7 @@ $assets = $pdo->query("SELECT asset_id, name FROM assets")->fetchAll(PDO::FETCH_
                     <option value="Urgent">Urgent</option>
                 </select>
 
-                <button type="submit" class="btn-create" style="width:100%;">Create Ticket</button>
+                <button type="submit" class="btn" style="width:100%;">Create Ticket</button>
                 <button type="button" onclick="$('#addTicketModal').hide()" style="width:100%; margin-top:10px; background:none; border:none; color:gray; cursor:pointer;">Cancel</button>
             </form>
         </div>

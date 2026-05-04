@@ -22,60 +22,46 @@ while($row = $chartQuery->fetch(PDO::FETCH_ASSOC)) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Executive Dashboard | Monik Group</title>
-    <!-- Chart.js for Visual Reports[cite: 1] -->
+    <link rel="stylesheet" href="assets/css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body { margin: 0; display: flex; font-family: 'Segoe UI', sans-serif; background: #f4f7f6; }
-        .main-wrapper { margin-left: 250px; padding: 30px; width: calc(100% - 250px); }
-        
-        /* KPI Cards Styling */
-        .kpi-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px; }
-        .kpi-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center; border-bottom: 4px solid #3498db; }
-        .kpi-card h3 { font-size: 24px; margin: 10px 0; color: #2c3e50; }
-        .kpi-card p { color: #7f8c8d; font-size: 14px; margin: 0; font-weight: bold; }
-        
-        .chart-section { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .alerts-panel { margin-top: 30px; background: #fff; padding: 20px; border-radius: 10px; border-left: 5px solid #e74c3c; }
-    </style>
 </head>
 <body>
     <?php include 'includes/sidebar.php'; ?>
 
     <div class="main-wrapper">
-        <h1>Welcome, <?php echo $_SESSION['full_name']; ?> 🚀</h1>
-        <p>Real-time overview of Monik Group operations.</p>
+        <?php include 'includes/topbar.php'; ?>
+        <h1 class="page-title">Welcome, <?php echo htmlspecialchars($_SESSION['full_name'] ?? 'Executive'); ?> 🚀</h1>
+        <p class="page-subtitle">Real-time overview of Monik Group operations.</p>
 
-        <!-- KPI Row[cite: 1] -->
         <div class="kpi-container">
-            <div class="kpi-card" style="border-color: #3498db;">
+            <div class="kpi-card blue">
                 <p>TOTAL BRANCHES</p>
-                <h3><?php echo $totalBranches; ?></h3>
+                <h3><?php echo (int) $totalBranches; ?></h3>
             </div>
-            <div class="kpi-card" style="border-color: #f1c40f;">
+            <div class="kpi-card yellow">
                 <p>TOTAL ASSETS</p>
-                <h3><?php echo $totalAssets; ?></h3>
+                <h3><?php echo (int) $totalAssets; ?></h3>
             </div>
-            <div class="kpi-card" style="border-color: #e74c3c;">
+            <div class="kpi-card red">
                 <p>OPEN TICKETS</p>
-                <h3><?php echo $openTickets; ?></h3>
+                <h3><?php echo (int) $openTickets; ?></h3>
             </div>
-            <div class="kpi-card" style="border-color: #27ae60;">
+            <div class="kpi-card green">
                 <p>AVG AUDIT SCORE</p>
-                <h3><?php echo round($avgAudit, 1); ?>%</h3>
+                <h3><?php echo round((float) $avgAudit, 1); ?>%</h3>
             </div>
         </div>
 
-        <!-- Charts Section[cite: 1] -->
         <div class="chart-section">
             <h3>📈 Audit Performance Trend</h3>
             <canvas id="auditChart" height="100"></canvas>
         </div>
 
-        <!-- Alerts Panel[cite: 1] -->
         <div class="alerts-panel">
-            <h4 style="margin:0; color: #e74c3c;">🚨 System Alerts</h4>
-            <ul style="margin: 10px 0 0 0; font-size: 14px;">
+            <h4 class="alert-title">🚨 System Alerts</h4>
+            <ul class="alerts-list">
                 <?php if($openTickets > 5): ?>
                     <li>High volume of open service tickets. Assign more technicians.</li>
                 <?php endif; ?>
@@ -96,14 +82,25 @@ while($row = $chartQuery->fetch(PDO::FETCH_ASSOC)) {
             datasets: [{
                 label: 'Audit Score %',
                 data: <?php echo json_encode($chartScores); ?>,
-                borderColor: '#3498db',
-                backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                borderColor: '#4f8cff',
+                backgroundColor: 'rgba(79, 140, 255, 0.15)',
                 fill: true,
-                tension: 0.3
+                tension: 0.32
             }]
         },
         options: {
-            scales: { y: { beginAtZero: true, max: 100 } }
+            plugins: {
+                legend: { labels: { color: '#33466e' } }
+            },
+            scales: {
+                x: { ticks: { color: '#5f6f8f' }, grid: { color: 'rgba(76,99,144,0.16)' } },
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: { color: '#5f6f8f' },
+                    grid: { color: 'rgba(76,99,144,0.16)' }
+                }
+            }
         }
     });
     </script>

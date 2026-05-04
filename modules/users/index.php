@@ -14,22 +14,19 @@ $branches = $pdo->query("SELECT * FROM branches")->fetchAll(PDO::FETCH_ASSOC);
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Management | Monik Group</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        body { font-family: sans-serif; padding: 20px; background: #f4f7f6; }
-        table { width: 100%; border-collapse: collapse; background: white; }
-        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
-        th { background: #34495e; color: white; }
-        .btn { padding: 10px 15px; border: none; cursor: pointer; border-radius: 4px; }
-        .btn-add { background: #27ae60; color: white; }
-        #userModal { display:none; position:fixed; top:10%; left:30%; background:white; padding:30px; border:1px solid #ccc; box-shadow: 0 5px 15px rgba(0,0,0,0.3); width: 400px; }
-    </style>
 </head>
 <body>
+    <?php include '../../includes/sidebar.php'; ?>
 
+    <div class="main-wrapper">
+    <?php include '../../includes/topbar.php'; ?>
     <h2>👥 User Management</h2>
-    <button class="btn btn-add" onclick="$('#userModal').show()">+ Create New User</button>
+    <button class="btn" onclick="$('#userModal').show()">+ Create New User</button>
 
     <table>
         <thead>
@@ -55,6 +52,7 @@ $branches = $pdo->query("SELECT * FROM branches")->fetchAll(PDO::FETCH_ASSOC);
     </table>
 
     <div id="userModal">
+        <div class="modal-content">
         <h3>Create Staff Account</h3>
         <form id="addUserForm">
             <input type="text" name="full_name" placeholder="Full Name" required style="width:100%; margin-bottom:10px;">
@@ -76,9 +74,11 @@ $branches = $pdo->query("SELECT * FROM branches")->fetchAll(PDO::FETCH_ASSOC);
                 <?php endforeach; ?>
             </select>
 
-            <button type="submit" class="btn btn-add" style="width:100%;">Create User</button>
+            <button type="submit" class="btn" style="width:100%;">Create User</button>
             <button type="button" onclick="$('#userModal').hide()" style="width:100%; margin-top:5px;">Cancel</button>
         </form>
+        </div>
+    </div>
     </div>
 
     <script>
