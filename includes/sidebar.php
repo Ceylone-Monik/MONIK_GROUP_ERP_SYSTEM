@@ -7,7 +7,9 @@ function nav_active(string $needle, string $uri): string {
 }
 ?>
 <div class="sidebar">
-    <h2>MONIK ERP</h2>
+    <h2 class="sidebar-brand">
+        <img src="<?php echo $base_url; ?>assets/pic/Monik.png" alt="Monik Group Logo" class="sidebar-logo">
+    </h2>
     <div class="nav-links">
         <a class="<?php echo nav_active('/dashboard.php', $uri); ?>" href="<?php echo $base_url; ?>dashboard.php">📊 Dashboard</a>
         <a class="<?php echo nav_active('/modules/branches/', $uri); ?>" href="<?php echo $base_url; ?>modules/branches/index.php">🏢 Branches</a>

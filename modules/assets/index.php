@@ -14,6 +14,10 @@ $branches = $pdo->query("SELECT branch_id, name FROM branches")->fetchAll(PDO::F
 
 <!DOCTYPE html>
 <html lang="en">
+<?php 
+  $pageTitle = "Assets | MONIK Group"; // Change this per module
+  include '../../includes/header.php'; 
+?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

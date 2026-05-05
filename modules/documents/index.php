@@ -12,6 +12,10 @@ $branches = $pdo->query("SELECT * FROM branches WHERE status = 'Active'")->fetch
 ?>
 <!DOCTYPE html>
 <html lang="en">
+<?php 
+  $pageTitle = "Documents | MONIK Group"; // Change this per module
+  include '../../includes/header.php'; 
+?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

@@ -11,6 +11,10 @@ $assets = $pdo->query("SELECT asset_id, name FROM assets")->fetchAll(PDO::FETCH_
 ?>
 <!DOCTYPE html>
 <html lang="en">
+<?php 
+  $pageTitle = "Service Board | MONIK Group"; // Change this per module
+  include '../../includes/header.php'; 
+?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

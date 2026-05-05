@@ -9,6 +9,10 @@ $branches = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <!DOCTYPE html>
 <html lang="en">
+<?php 
+  $pageTitle = "Branches | MONIK Group"; // Change this per module
+  include '../../includes/header.php'; 
+?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +27,7 @@ $branches = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <?php include '../../includes/topbar.php'; ?>
 <div class="container">
     <h2>🏢 Branch Management</h2>
-    <button class="btn" onclick="$('#branchModal').show()">+ Add New Branch</button>
+    <button type="button" class="btn" id="btnAddBranch">+ Add New Branch</button>
 
     <table>
         <thead>
@@ -48,26 +52,34 @@ $branches = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <?php echo $row['status']; ?>
                     </span>
                 </td>
-                <td><button class="btn">Edit</button></td>
+                <td>
+                    <button type="button" class="btn btn-edit-branch"
+                        data-branch-id="<?php echo (int) $row['branch_id']; ?>"
+                        data-name="<?php echo htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8'); ?>"
+                        data-region="<?php echo htmlspecialchars($row['region'], ENT_QUOTES, 'UTF-8'); ?>"
+                        data-org-id="<?php echo (int) $row['org_id']; ?>"
+                        data-status="<?php echo htmlspecialchars($row['status'], ENT_QUOTES, 'UTF-8'); ?>">Edit</button>
+                </td>
             </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
 </div>
 
-<!-- Add Branch Modal -->
+<!-- Add / Edit Branch Modal -->
 <div id="branchModal">
     <div class="modal-content">
-        <h3 style="margin-top:0;">Register New Branch</h3>
-        <form id="addBranchForm">
-            <input type="hidden" name="org_id" value="1">
-            <input type="text" name="name" placeholder="Branch Name (e.g. Badulla Hub)" required>
-            <input type="text" name="region" placeholder="Region (e.g. Uva)" required>
-            <select name="status">
+        <h3 id="branchModalTitle" style="margin-top:0;">Register New Branch</h3>
+        <form id="branchForm">
+            <input type="hidden" name="branch_id" id="branch_id" value="">
+            <input type="hidden" name="org_id" id="branch_org_id" value="1">
+            <input type="text" name="name" id="branch_name" placeholder="Branch Name (e.g. Badulla Hub)" required>
+            <input type="text" name="region" id="branch_region" placeholder="Region (e.g. Uva)" required>
+            <select name="status" id="branch_status">
                 <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
             </select>
-            <button type="submit" class="btn">Save Branch</button>
+            <button type="submit" class="btn" id="branchSubmitBtn">Save Branch</button>
             <button type="button" onclick="$('#branchModal').hide()" style="background:none; border:none; color:#999; width:100%; margin-top:10px; cursor:pointer;">Cancel</button>
         </form>
     </div>
@@ -76,18 +88,49 @@ $branches = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <script>
 $(document).ready(function() {
-    $('#addBranchForm').on('submit', function(e) {
+    function openBranchModalAdd() {
+        $('#branchModalTitle').text('Register New Branch');
+        $('#branch_id').val('');
+        $('#branch_org_id').val('1');
+        $('#branch_name').val('');
+        $('#branch_region').val('');
+        $('#branch_status').val('Active');
+        $('#branchSubmitBtn').text('Save Branch');
+        $('#branchModal').show();
+    }
+
+    $('#btnAddBranch').on('click', openBranchModalAdd);
+
+    $(document).on('click', '.btn-edit-branch', function() {
+        var $b = $(this);
+        $('#branchModalTitle').text('Edit Branch');
+        $('#branch_id').val($b.attr('data-branch-id'));
+        $('#branch_org_id').val($b.attr('data-org-id'));
+        $('#branch_name').val($b.attr('data-name'));
+        $('#branch_region').val($b.attr('data-region'));
+        $('#branch_status').val($b.attr('data-status'));
+        $('#branchSubmitBtn').text('Update Branch');
+        $('#branchModal').show();
+    });
+
+    $('#branchForm').on('submit', function(e) {
         e.preventDefault();
+        var id = $('#branch_id').val();
+        var url = id ? 'update_branch.php' : 'add_branch.php';
         $.ajax({
-            url: 'add_branch.php',
+            url: url,
             method: 'POST',
             data: $(this).serialize(),
+            dataType: 'json',
             success: function(response) {
-                if(response.status === 'success') {
+                if (response.status === 'success') {
                     location.reload();
                 } else {
-                    alert('Error: ' + response.message);
+                    alert('Error: ' + (response.message || 'Unknown'));
                 }
+            },
+            error: function() {
+                alert('Request failed.');
             }
         });
     });

@@ -4,8 +4,7 @@ $fullName = $_SESSION['full_name'] ?? 'User';
 ?>
 <div class="topbar">
   <div class="topbar-left">
-    <span class="brand-dot" aria-hidden="true"></span>
-    <p class="topbar-title">Monik Group - Executive Operations Portal</p>
+    <img src="<?php echo $base_url; ?>assets/pic/Monik.png" alt="Monik Group Logo" class="topbar-logo">
   </div>
   <div class="topbar-right">
     <a class="quick-action" href="<?php echo $base_url; ?>modules/assets/index.php">+ Add Asset</a>
