@@ -8,7 +8,7 @@ function nav_active(string $needle, string $uri): string {
 ?>
 <div class="sidebar">
     <h2 class="sidebar-brand">
-        <img src="<?php echo $base_url; ?>assets/pic/Monik.png" alt="Monik Group Logo" class="sidebar-logo">
+        <img src="<?php echo $base_url; ?>assets/pic/Monik.jpeg" alt="Monik Group Logo" class="sidebar-logo">
     </h2>
     <div class="nav-links">
         <a class="<?php echo nav_active('/dashboard.php', $uri); ?>" href="<?php echo $base_url; ?>dashboard.php">📊 Dashboard</a>

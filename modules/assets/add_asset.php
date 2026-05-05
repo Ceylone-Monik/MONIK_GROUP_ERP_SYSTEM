@@ -5,10 +5,15 @@ require_once '../../config/db.php';
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = $_POST['name'] ?? '';
-    $category = $_POST['category'] ?? '';
+    $name = trim($_POST['name'] ?? '');
+    $category = trim($_POST['category'] ?? '');
     $branch_id = $_POST['branch_id'] ?? '';
-    $status = 'Good'; // Default status
+    $status = 'Good'; 
+
+    if (empty($name) || empty($branch_id)) {
+        echo json_encode(['status' => 'error', 'message' => 'Please fill in all required fields.']);
+        exit;
+    }
 
     try {
         $stmt = $pdo->prepare("INSERT INTO assets (name, category, branch_id, status) VALUES (?, ?, ?, ?)");
@@ -18,4 +23,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
     }
 }
-?>
